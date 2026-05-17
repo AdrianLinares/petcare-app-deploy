@@ -1,0 +1,38 @@
+{
+    "name": "petcare-app",
+    "version": "1.0.0",
+    "description": "PetCare Application — Veterinary management system",
+    "private": true,
+    "engines": {
+        "node": ">=20 <21",
+        "pnpm": ">=10"
+    },
+    "packageManager": "pnpm@10.14.0",
+    "scripts": {
+        "setup": "sh ./setup.sh",
+        "dev": "netlify dev --filter petcare-app",
+        "build": "pnpm --filter ./frontend build",
+        "build:frontend": "pnpm --filter ./frontend build",
+        "prebuild": "pnpm --filter ./frontend test:run || true",
+        "start": "node server/index.js",
+        "start:prod": "NODE_ENV=production node server/index.js",
+        "test": "pnpm --filter ./frontend test",
+        "test:run": "pnpm --filter ./frontend test:run",
+        "test:coverage": "pnpm --filter ./frontend test:coverage",
+        "install:all": "pnpm install",
+        "install:functions": "pnpm install --filter ./netlify/functions",
+        "reinstall:clean": "./fix-dependencies.sh",
+        "docker:build": "docker compose build",
+        "docker:up": "docker compose up -d",
+        "docker:down": "docker compose down",
+        "docker:logs": "docker compose logs -f"
+    },
+    "devDependencies": {
+        "netlify-cli": "^23.14.0"
+    },
+    "dependencies": {
+        "agentation": "^3.0.2",
+        "express": "^4.21.0",
+        "cors": "^2.8.5"
+    }
+}

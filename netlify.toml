@@ -1,0 +1,45 @@
+[build]
+  base = "."
+  publish = "frontend/dist"
+  command = "pnpm install --frozen-lockfile && pnpm --filter ./frontend build"
+
+[build.environment]
+  NODE_VERSION = "20"
+  PNPM_VERSION = "10"
+
+[functions]
+  # Point Netlify to the SOURCE TypeScript files
+  # Netlify's esbuild bundler will compile and bundle them automatically
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[dev]
+  command = "pnpm --filter ./frontend dev"
+  port = 8888
+  targetPort = 5173
+  framework = "#custom"
+  functions = "netlify/functions"
+
+# [[edge_functions]]
+#   path = "/api/*"
+#   function = "api-cache"
+
+# [context.dev.environment]
+#   # WARNING: Do NOT commit sensitive credentials here
+#   # Instead, use Netlify CLI: netlify env:set KEY VALUE
+#   # Or use a .env file locally (which is gitignored)
+#   # Example for local dev:
+#   # DATABASE_URL = "postgresql://user:password@localhost:5432/petcare_db"
+#   # JWT_SECRET = "your_secret_key_here"
+#   # FRONTEND_URL = "http://localhost:8888"
+#   # NODE_ENV = "development"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

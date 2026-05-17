@@ -1,0 +1,39 @@
+# ============================================================================
+# .dockerignore — Excluir archivos innecesarios del contexto Docker
+# ============================================================================
+
+# Dependencias (se instalan dentro del contenedor)
+node_modules
+pnpm-lock.yaml
+
+# Archivos de entorno (contienen secretos)
+.env
+.env.*.local
+frontend/.env
+netlify/functions/.env
+
+# Builds locales
+dist
+frontend/dist
+
+# Git y control de versiones
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.vscode
+.idea
+
+# Documentación y misc
+*.md
+docs
+AGENTS.md
+
+# Netlify
+.netlify
+netlify.toml
+
+# OS
+.DS_Store
+Thumbs.db

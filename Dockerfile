@@ -24,7 +24,7 @@ COPY netlify/functions/package.json ./netlify/functions/
 COPY server/package.json ./server/
 
 # Instalar todas las dependencias del workspace
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --no-frozen-lockfile
 
 # Copiar código fuente
 COPY . .
@@ -80,4 +80,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=10s \
   CMD node -e "require('http').get('http://localhost:3000/health', r => { process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"
 
 # Iniciar servidor Express (usa node --experimental-strip-types para .ts)
-CMD ["node", "--experimental-strip-types", "server/index.js"]
+CMD ["npx", "tsx", "server/index.js"]

@@ -128,7 +128,7 @@ function createHandlerRoute(moduleName, apiPrefix) {
       const handler = await loadHandler(moduleName);
       // El handler recibe el path con el prefijo /api/{name} para que
       // su propio .replace() lo normalice internamente
-      const normalizedPath = `${apiPrefix}${req.path}`;
+      const normalizedPath = req.path;
       const event = buildHandlerEvent(req, normalizedPath);
       const result = await handler(event);
       sendHandlerResponse(res, result);
@@ -181,6 +181,13 @@ for (const [moduleName, prefix] of Object.entries(ROUTES)) {
 }
 
 // ──────────────────────────────────────────────
+// Health check
+// ──────────────────────────────────────────────
+app.get('/health', (_req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// ──────────────────────────────────────────────
 // Frontend static files (producción)
 // ──────────────────────────────────────────────
 if (NODE_ENV === 'production') {
@@ -205,13 +212,6 @@ if (NODE_ENV === 'production') {
     console.warn('[server] Frontend will not be served. Run: pnpm build');
   }
 }
-
-// ──────────────────────────────────────────────
-// Health check
-// ──────────────────────────────────────────────
-app.get('/health', (_req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
 
 // ──────────────────────────────────────────────
 // Start

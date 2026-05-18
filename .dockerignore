@@ -4,7 +4,6 @@
 
 # Dependencias (se instalan dentro del contenedor)
 node_modules
-pnpm-lock.yaml
 
 # Archivos de entorno (contienen secretos)
 .env
